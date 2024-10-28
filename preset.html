@@ -203,7 +203,7 @@ whatsappForm.addEventListener('submit', (event) => {
   const message = document.getElementById('message').value;
   const School = document.getElementById('School').value;
 
-  const whatsappMessage = `Hi, I'm ${name} ${lastName}'  '\Form: ${formName}' .\n${message} '\school: ${School}`;
+  const whatsappMessage = `Hi, I'm ${name} ${lastName}'  '\form: ${formName}' .\n${message} '\school: ${School}`;
   const whatsappLink = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(whatsappMessage)}`;
 
   window.location.href = whatsappLink;
