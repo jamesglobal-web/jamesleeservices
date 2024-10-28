@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Owner Login</title>
+</head>
+<style>
+    .container {
+      background-color: grey;
+      width: 40%;
+      height: 50%;
+      width: 300px;
+      padding: 20px;
+      border-radius: 8px;
+      background-color: #fff;
+      box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+    }
+
+   body {
+    background-color: bisque;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    display: flex;
+   }
+
+   h1 {
+    text-align: center;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+
+</style>
+<body>
+    <div class="container">
+        <h1>Admin Sign-In</h1>
+    <form id="loginForm"style="justify-content: center;">
+     <br> <li><label style="font-weight: 300;"><b>Admin:  </b></label> <input type="email" id="email" placeholder="Email" required><br></li>
+       <br> <br><li><label><b>Password: </b></labe><input type="password" id="password" placeholder="Password" required><br></li>
+       <br> <br><button type="submit" style="text-align: center;" style="align-content: center;">Login</button>
+    </form>
+    </div>
+    <p id="message"></p>
+
+    <!-- Firebase setup -->
+    <script src="https://www.gstatic.com/firebasejs/9.x/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.x/firebase-auth.js"></script>
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyDyARFkXIaIbZaSKcjndPtfNr8VkzjiXeQ",
+            authDomain: "prospera-1620c.firebaseapp.com",
+            projectId: "prospera-1620c",
+            storageBucket: "prospera-1620c.appspot.com",
+            messagingSenderId: "3420982464",
+            appId: "1:34209824640:web:051f6c02741d8c218d4b65",
+        };
+
+        if (user.email === "owner@example.com" && user.emailVerified) {
+            console.log("Welcome mr James");
+        }
+        // Initialize Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+
+        const loginForm = document.getElementById('loginForm');
+        const message = document.getElementById('message');
+
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            try {
+                const userCredential = await auth.signInWithEmailAndPassword(email, password);
+                const user = userCredential.user;
+
+                // Check if the user is the owner and email is verified
+                if (user.email === "owner@example.com" && user.emailVerified) {
+                    window.location.href = "create_post.html";
+                } else {
+                    message.textContent = "Access Denied! Only the verified owner can access the create post page.";
+                    auth.signOut();
+                }
+            } catch (error) {
+                console.error("Login error:", error);
+                message.textContent = "Login failed. Please check your email and password.";
+            }
+        });
+    </script>
+</body>
+</html>

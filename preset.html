@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JamesLeeServices</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<style>
+    body {
+    background-color: #111;
+    color: #fff;
+    font-family: sans-serif;
+    display: flex;
+    align-items: center;
+}
+
+header {
+    height: 100vh;
+    display: block;
+    align-items: center;
+    justify-content: center;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+}
+
+nav li {
+    position: relative;
+    margin-right: 20px;
+}
+
+nav a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 18px;
+    transition: color 0.3s ease-in-out;
+}
+
+nav a:hover {
+    color: #0ff;
+}
+
+nav li::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    background-color: #0ff;
+    bottom: -5px;
+    left: 0;
+    transition: width 0.3s ease-in-out;
+}
+
+nav li:hover::after {
+    width: 100%;
+}
+
+.social-media {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+}
+
+.social-media li {
+    margin: 0 10px;
+}
+
+.social-media a {
+    color: #fff;
+    font-size: 24px;
+    transition: color 0.3s ease-in-out;
+}
+
+.social-media a:hover {
+    color: #0ff;
+}
+
+.container {
+  align-content: center;
+  background-color: #f1f1f1;
+  width: 30%;
+  padding: 15px;
+  border-radius: 8px;
+  margin-top: 10px;
+  height: 80%;
+  color: black;
+  display: center;
+  background-position: center;
+}
+
+</style>
+ <body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="home.html">Home</a></li>
+                <li><a href="home.html">About</a></li>
+                <li><a href="home.html">Services</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="container">
+    <form id="whatsappForm">
+  <label for="name">First Name:</label>
+  <input type="text" id="name" name="name" required>
+  <br>
+  <br>
+  <label for="name">Last Name:</label>
+  <input type="text" id="name" name="name" required>
+  <br>
+  <br>
+  <label for="name">What Form?:</label>
+  <input type="text" id="name" name="name" required>
+  <br>
+  <br>
+  <label for="name">School:</label>
+  <input type="text" id="School" name="School" required>
+  <br>
+  <br>
+  <label for="message">Message:</label>
+  <textarea id="message" name="message" required></textarea>
+  <br>
+  <br>
+  <button type="submit">Send to WhatsApp</button>
+</form>
+    </div1>
+
+    <script>
+        // Get the navigation bar
+const nav = document.querySelector('nav');
+
+// Add a hover effect to navigation links
+nav.addEventListener('mouseover', (event) => {
+  const target = event.target;
+  if (target.tagName === 'A') {
+    target.style.color = '#00ff00'; // Adjust the color as needed
+    target.style.textShadow = '0 0 10px #00ff00';
+  }
+});
+
+nav.addEventListener('mouseout', (event) => {
+  const target = event.target;
+  if (target.tagName === 'A') {
+    target.style.color = '#fff';
+    target.style.textShadow = 'none';
+  }
+});
+
+// Create a subtle background animation
+const header = document.querySelector('header');
+header.style.backgroundImage = 'linear-gradient(to right, #111, #222)';
+header.style.backgroundSize = '200% 200%';
+header.style.animation = 'gradientAnimation 10s ease infinite';
+
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+// Get the social media icons
+const socialIcons = document.querySelectorAll('.social-media a');
+
+// Add a hover effect to the icons
+socialIcons.forEach(icon => {
+  icon.addEventListener('mouseover', () => {
+    icon.style.transform = 'scale(1.2)';
+  });
+
+  icon.addEventListener('mouseout', () => {
+    icon.style.transform = 'scale(1)';
+  });
+});
+
+    </script>
+</body>
+<br>
+<br>
+<script>
+    const whatsappForm = document.getElementById('whatsappForm');
+const phoneNumber = '+2347030276583'; // Replace with the desired WhatsApp number
+
+whatsappForm.addEventListener('submit', (event) => {
+  event.preventDefault();
+
+  const name = document.getElementById('name').value;
+  const message = document.getElementById('message').value;
+
+  const whatsappMessage = `Hi, I'm ${name}.\n${message}`;
+  const whatsappLink = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(whatsappMessage)}`;
+
+  window.location.href = whatsappLink;
+});
+
+</script>
+
+</html>

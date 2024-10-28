@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News</title>
+</head>
+<body>
+    <h1>News</h1>
+    <div id="newsContainer">Loading news...</div>
+
+    <script>
+        const newsContainer = document.getElementById('newsContainer');
+
+        // Improved error handling and loading logic
+        async function loadNews() {
+            try {
+                const snapshot = await db.collection('news').orderBy('timestamp', 'desc').get();
+                newsContainer.innerHTML = '';  // Clear loading text
+
+                if (snapshot.empty) {
+                    newsContainer.innerHTML = '<p>No news available at the moment.</p>';
+                    return;
+                }
+
+                snapshot.forEach(doc => {
+                    const news = doc.data();
+                    const newsItem = document.createElement('div');
+                    newsItem.innerHTML = `<h2>${news.title}</h2><p>${news.content}</p><hr>`;
+                    newsContainer.appendChild(newsItem);
+                });
+            } catch (error) {
+                console.error("Error loading news:", error);
+                newsContainer.innerHTML = '<p>Error loading news. Please try again later.</p>';
+            }
+        }
+
+        // Load news when the page loads
+        window.onload = loadNews;
+    </script>
+</body>
+</html>

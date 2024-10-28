@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JamesLeeServices.ng</title>
+<style>
+    .splash-screen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #111; /* A strong bank-like color */
+    color: #fff;
+    font-family: Arial, sans-serif;
+  }
+  
+  .splash-screen h1 {
+    font-size: 4rem;
+    margin: 0;
+  }
+  
+  .splash-screen p {
+    font-size: 1.2rem;
+    margin-top: 1rem;
+  }
+  
+  .dropdown {
+      position: relative;
+      display: inline-block;
+    }
+
+    .dropdown-button {
+      background-color: #979797;
+      color: white;
+      padding: 10px;
+      font-size: 16px;
+      border: none;
+      align-content: flex-end;
+    }
+
+    /* Dropdown Content (hidden by default) */
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: #f9f9f9;
+      min-width: 160px;
+      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+      z-index: 1;
+    }
+
+    /* Dropdown Links */
+    .dropdown-content a {
+      color: black;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+    }
+
+    /* Change color of links on hover */
+    .dropdown-content a:hover { background-color: #f1f1f1 }
+
+    /* Show dropdown on hover */
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+
+    /* Change button color on hover */
+    .dropdown:hover .dropdown-button {
+      background-color: #3e8e41;
+    }
+
+    nav ul {
+    display: flex;
+    justify-content: space-between;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+    }
+
+    nav li {
+      list-style: none;
+      transition: color 0.3s ease-in;
+      margin: right;
+      color: white;
+    }
+
+    nav li:hover {
+      color: grey;
+    }
+
+    header {
+      background-color: black;
+      min-height: 70px;
+      align-content: center;
+      color: white;
+      padding: 15px;
+      border-radius: 8px;
+      margin-top: 10px; 
+      }
+
+    h1 {
+      text-align: center;
+      text-shadow: black;
+    }
+
+    .div {
+        background-color: #979797;
+    }
+
+    body {
+      background-image: url(lkl.jpeg);
+      background-repeat: no-repeat;
+      background-size: cover;
+      height: 100%;
+      width: 100%;
+      align-self: center;
+    }
+
+    .list {
+      background-color: #f1f1f1;
+      width: 30%;
+      padding: 15px;
+      border-radius: 8px;
+      margin-top: 10px;
+      height: 80%;
+      font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    }
+  
+
+    img {
+     max-height: 500px;
+      align-content: center;
+      width: 100%;
+      object-fit: cover;
+    }
+
+    p {
+      color: black;
+      background-color: #f1f1f1;
+      font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+      padding: 15px;
+      font-weight: 200;
+      margin-top: 10px;
+      border-radius: 8px;
+    }
+
+    p2 {
+      color: black;
+      background-color: #f1f1f1;
+      font-family: sans-serif;
+      padding: 15px;
+      font-weight: 200;
+      margin-top: 10px;
+      border-radius: 8px;
+    }
+
+  
+
+    footer {
+      padding: 15px;
+      font-weight: 200;
+      margin-top: 10px;
+      border-radius: 8px;
+      color: white;
+      background-color: black;
+    }
+
+</style>
+<header>
+    <nav>
+     <h1>JamesLeeServices..</h1>
+     <div class="div">
+     <ul>
+        <li><a href="preset.html">fill a form </a></li><span></span>
+       <li><a href="about.html">about</a></li><span></span>
+        <li><a href="news.html">News</a></li><span></span>
+      </ul>
+      </div>
+        <div class="dropdown"><span></span>
+ <button onclick="toggleDropdown()" class="dropdown-button">more</button><span></span>
+  <div id="myDropdown" class="dropdown-content">
+    <a href="contact.html">contact</a>
+    <a href="list.html">portal</a>
+    <a href="login.html">admin.</a>
+  </div>
+</div>
+
+<script>
+  function toggleDropdown() {
+    document.getElementById("myDropdown").classList.toggle("show");
+  }
+
+  // Close the dropdown if the user clicks outside of it
+  window.onclick = function(event) {
+    if (!event.target.matches('.dropdown-button')) {
+      var dropdowns = document.getElementsByClassName("dropdown-content");
+      for (var i = 0; i < dropdowns.length; i++) {
+        var openDropdown = dropdowns[i];
+        if (openDropdown.classList.contains('show')) {
+          openDropdown.classList.remove('show');
+        }
+      }
+    }
+  }
+</script>
+
+</nav>
+</header><br>
+
+<div class="list">
+    <li><a href="preset.html">UNIPORT</a></li>
+    <li><a href="preset.html">CLEARANCE</a></li>
+    <li><a href="preset.html">PREDEGREE REG</a></li>
+    <li><a href="preset.html">POST-GRADUATE</a></li>
+    <li><a href="preset.html">NIN</a></li>
+    <li><a href="preset.html">OTHERS...</a></li>
+</div><br>
+<body>
+<b><h2>more info</h2></b>
+<p>hi students, welcome to my educational portal where you can easily get latest news on educational institutions, admission status, registration for all kind of exams, clearance, post graduate studies, basic registration, and many more. please feel free to fill a form and tell us about your issues and your complains, and we will get to you shortly.
+  we offer all educational subsequent needs, all at your comfort.  we are here to help you achieve your dreams. we are here to help you achieve your dreams., you can aslo reach us at our physical office, at Block 79 UNIPORT shopping complex, choba, Port Harcourt, Rivers state, Nigeria.
+  feel free to glance through lastes admissiom updates, registration updates and many more
+</p>
+<div class="block"><b><h3>UNIPORT ADMISSION LIST!!!</h3></b>
+<p>UNIPORT begins uploading of Admission list on JAMB CAPS for the 2024/2025 academic session. This is to inform all candidates who participated in the 2024/2025 Admission Screening excerise that they can proceed to check their names.</p><br><img src="https://myschool.ng/storage/blog/HEOdIGxzwYz2bg2gGk5VfjVRQCgjDISVl1W8JZNy.png" alt="How to check the Admission Status on JAMB CAPS"><br>
+<li>Visit <u>http://efacility.jamb.gov.ng/</u> and login with your registered email address and password to access your dashboard.</li><br>
+<li>Click on 'Check Admission Status,</li><br>
+<li>Click on 'Acess My CAPS'</li><br>
+<li>Click on 'Admission status' to see if you have been offered Addmission.</li><br>
+<br>
+<p3>Candidates who have been offered admission are to proceed to "ACCEPT" or "REJECT" to indicate acceptance or rejection of the admission offer. You can also send a message to us via whatsapp <number>+2347030276583</number> to help you out where you're confused.<br>
+payment of acceptance fee can also be done quickly, easily. also print your admission letter with us thanks
+</p3></div>
+</body>
+<footer>&copy 2024
+   Your sure admission plug<br>Block 79 UNIPORT shopping complex, choba, Port Harcourt, Rivers state, Nigeria.
+</footer>
+</html>
