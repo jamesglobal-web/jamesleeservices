@@ -114,11 +114,11 @@ nav li:hover::after {
   <br>
   <br>
   <label for="name">Last Name:</label>
-  <input type="text" id="name" name="name" required>
+  <input type="text" id="Lastname" name="Lastname" required>
   <br>
   <br>
   <label for="name">What Form?:</label>
-  <input type="text" id="name" name="name" required>
+  <input type="text" id="Formname" name="Formname" required>
   <br>
   <br>
   <label for="name">School:</label>
@@ -200,7 +200,7 @@ whatsappForm.addEventListener('submit', (event) => {
   const name = document.getElementById('name').value;
   const message = document.getElementById('message').value;
 
-  const whatsappMessage = `Hi, I'm ${name}.\n${message}`;
+  const whatsappMessage = `Hi, I'm ${name, Lastname} form: ${Formname}.\n${message} school: ${School}`;
   const whatsappLink = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(whatsappMessage)}`;
 
   window.location.href = whatsappLink;
