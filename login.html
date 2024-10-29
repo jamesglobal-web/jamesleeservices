@@ -8,8 +8,6 @@
 <style>
     .container {
       background-color: grey;
-      width: 40%;
-      height: 50%;
       width: 300px;
       padding: 20px;
       border-radius: 8px;
@@ -19,11 +17,11 @@
 
     body {
         background-color: bisque;
+        display: flex;
         justify-content: center;
         align-items: center;
         height: 100vh;
         margin: 0;
-        display: flex;
     }
 
     h1 {
@@ -55,15 +53,13 @@
                 <br>
             </li>
             <br>
-            <br>
             <li>
                 <label><b>Password: </b></label>
                 <input type="password" id="password" placeholder="Password" required>
                 <br>
             </li>
             <br>
-            <br>
-            <a href="create_post.html" class="button">Login</a>
+            <button type="submit" class="button">Login</button>
         </form>
     </div>
     <p id="message"></p>
@@ -97,11 +93,9 @@
                 const userCredential = await auth.signInWithEmailAndPassword(email, password);
                 const user = userCredential.user;
 
-                // Debug: Log user details to console
                 console.log("User:", user);
                 console.log("Email Verified:", user.emailVerified);
 
-                // Check if the user is the owner and email is verified
                 if (user.email === "ekeminijamesleeglobal@gmail.com") {
                     if (user.emailVerified) {
                         window.location.href = "create_post.html";
