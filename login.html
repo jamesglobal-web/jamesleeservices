@@ -4,88 +4,88 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Owner Login</title>
+    <style>
+        .container {
+            background-color: grey;
+            width: 40%;
+            height: 50%;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #fff;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+            margin: auto;
+            margin-top: 100px;
+        }
+
+        body {
+            background-color: bisque;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            display: flex;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background-color: #45a049;
+        }
+
+        #message {
+            color: red;
+            text-align: center;
+        }
+    </style>
 </head>
-<style>
-    .container {
-        background-color: grey;
-        width: 40%;
-        height: 50%;
-        width: 300px;
-        padding: 20px;
-        border-radius: 8px;
-        background-color: #fff;
-        box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
-    }
-
-    body {
-        background-color: bisque;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        margin: 0;
-        display: flex;
-    }
-
-    h1 {
-        text-align: center;
-    }
-
-    .button {
-        width: 100%;
-        padding: 10px;
-        background-color: #4CAF50;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-    }
-
-    .button:hover {
-        background-color: #45a049;
-    }
-</style>
 <body>
     <div class="container">
         <h1>Admin Sign-In</h1>
-        <form id="loginForm" style="justify-content: center;">
-            <br> 
+        <form id="loginForm">
             <li>
-                <label style="font-weight: 300;"><b>Admin:  </b></label>
+                <label style="font-weight: 300;"><b>Admin:</b></label>
                 <input type="email" id="email" placeholder="Email" required>
-                <br>
             </li>
-            <br>
             <br>
             <li>
-                <label><b>Password: </b></label>
+                <label><b>Password:</b></label>
                 <input type="password" id="password" placeholder="Password" required>
-                <br>
             </li>
-            <br>
             <br>
             <button type="submit" class="button">Login</button>
         </form>
+        <p id="message"></p>
     </div>
-    <p id="message"></p>
 
     <!-- Firebase setup -->
-    <script src="https://www.gstatic.com/firebasejs/9.x/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.x/firebase-auth.js"></script>
-    <script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+
         const firebaseConfig = {
             apiKey: "AIzaSyDyARFkXIaIbZaSKcjndPtfNr8VkzjiXeQ",
             authDomain: "prospera-1620c.firebaseapp.com",
-            databaseURL: "https://prospera-1620c-default-rtdb.firebaseio.com",
             projectId: "prospera-1620c",
             storageBucket: "prospera-1620c.appspot.com",
             messagingSenderId: "34209824640",
             appId: "1:34209824640:web:051f6c02741d8c218d4b65",
-            measurementId: "G-ZKP5BDCNSK"
         };
 
         // Initialize Firebase
-        const app = firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
 
         const loginForm = document.getElementById('loginForm');
         const message = document.getElementById('message');
@@ -96,20 +96,15 @@
             const password = document.getElementById('password').value;
 
             try {
-                const userCredential = await auth.signInWithEmailAndPassword(email, password);
+                const userCredential = await signInWithEmailAndPassword(auth, email, password);
                 const user = userCredential.user;
 
-                // Debug: Log user details to console
-                console.log("User:", user);
-                console.log("Email Verified:", user.emailVerified);
-
-                // Check if the user is the owner and email is verified
+                // Check if the user is the owner
                 if (user.email === "ekeminijamesleeglobal@gmail.com") {
                     if (user.emailVerified) {
-                        window.location.href = "create_post.html";  // Redirects on successful login
+                        window.location.href = "create_post.html"; // Redirect after successful login
                     } else {
                         message.textContent = "Please verify your email before accessing the post page.";
-                        console.log("Email is not verified");
                     }
                 } else {
                     message.textContent = "Access Denied! Only the verified owner can access the create post page.";
