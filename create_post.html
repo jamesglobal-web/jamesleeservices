@@ -6,43 +6,40 @@
     <title>Create Post</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
-            background-color: #f5f5f5;
+            background-color: #f0f0f0;
         }
-
         .container {
-            width: 400px;
+            width: 100%;
+            max-width: 500px;
             padding: 20px;
-            background-color: #fff;
             border-radius: 8px;
-            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
-
         h1 {
             text-align: center;
-            color: #333;
         }
-
-        input, textarea, button {
+        input, textarea {
             width: 100%;
             padding: 10px;
             margin: 10px 0;
             border: 1px solid #ddd;
             border-radius: 4px;
         }
-
         button {
+            width: 100%;
+            padding: 10px;
             background-color: #4CAF50;
             color: white;
-            cursor: pointer;
             border: none;
+            border-radius: 4px;
+            cursor: pointer;
         }
-
         button:hover {
             background-color: #45a049;
         }
@@ -57,36 +54,34 @@
             <input type="file" id="image" accept="image/*">
             <button type="submit">Post</button>
         </form>
-        <p id="message"></p>
         <div id="postList"></div>
     </div>
 
-    <!-- Firebase setup -->
-    <script src="https://www.gstatic.com/firebasejs/9.x/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.x/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.x/firebase-firestore.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.x/firebase-storage.js"></script>
-    <script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, getDocs, serverTimestamp, orderBy, query, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+        import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-storage.js";
+
         const firebaseConfig = {
             apiKey: "AIzaSyDyARFkXIaIbZaSKcjndPtfNr8VkzjiXeQ",
             authDomain: "prospera-1620c.firebaseapp.com",
+            databaseURL: "https://prospera-1620c-default-rtdb.firebaseio.com",
             projectId: "prospera-1620c",
             storageBucket: "prospera-1620c.appspot.com",
-            messagingSenderId: "3420982464",
+            messagingSenderId: "34209824640",
             appId: "1:34209824640:web:051f6c02741d8c218d4b65",
+            measurementId: "G-ZKP5BDCNSK"
         };
 
-        // Initialize Firebase
-        const app = firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-        const db = firebase.firestore();
-        const storage = firebase.storage();
-
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth();
+        const db = getFirestore(app);
+        const storage = getStorage(app);
         const postForm = document.getElementById('postForm');
-        const message = document.getElementById('message');
+        const postList = document.getElementById('postList');
 
-        // Check if the user is the owner and email is verified
-        auth.onAuthStateChanged(user => {
+        onAuthStateChanged(auth, user => {
             if (user && user.email === "ekeminijamesleeglobal@gmail.com" && user.emailVerified) {
                 loadPosts();
             } else {
@@ -95,52 +90,48 @@
             }
         });
 
-        // Add a new post with an image
         postForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             const title = document.getElementById('title').value;
             const content = document.getElementById('content').value;
-            const image = document.getElementById('image').files[0];
+            const imageFile = document.getElementById('image').files[0];
 
-            let imageUrl = '';
-
-            if (image) {
-                const storageRef = storage.ref(`images/${image.name}`);
-                await storageRef.put(image);
-                imageUrl = await storageRef.getDownloadURL();
+            let imageUrl = null;
+            if (imageFile) {
+                const storageRef = ref(storage, `images/${imageFile.name}`);
+                await uploadBytes(storageRef, imageFile);
+                imageUrl = await getDownloadURL(storageRef);
             }
 
-            db.collection('news').add({
+            await addDoc(collection(db, 'news'), {
                 title,
                 content,
                 imageUrl,
-                timestamp: firebase.firestore.FieldValue.serverTimestamp()
-            }).then(() => {
-                alert("Post added successfully!");
-                postForm.reset();
-                loadPosts();
+                timestamp: serverTimestamp()
             });
+
+            alert("Post added successfully!");
+            postForm.reset();
+            loadPosts();
         });
 
-        // Load posts for editing/deleting
-        function loadPosts() {
-            const postList = document.getElementById('postList');
+        async function loadPosts() {
             postList.innerHTML = "";
+            const q = query(collection(db, 'news'), orderBy('timestamp', 'desc'));
+            const querySnapshot = await getDocs(q);
 
-            db.collection('news').orderBy('timestamp', 'desc').get().then(snapshot => {
-                snapshot.forEach(doc => {
-                    const post = doc.data();
-                    const postItem = document.createElement('div');
-                    postItem.innerHTML = `
-                        <h2>${post.title}</h2>
-                        <p>${post.content}</p>
-                        ${post.imageUrl ? `<img src="${post.imageUrl}" alt="Post Image" style="width:100%; height:auto;"/>` : ""}
-                        <button onclick="editPost('${doc.id}', '${post.title}', '${post.content}')">Edit</button>
-                        <button onclick="deletePost('${doc.id}')">Delete</button>
-                        <hr>
-                    `;
-                    postList.appendChild(postItem);
-                });
+            querySnapshot.forEach((doc) => {
+                const post = doc.data();
+                const postItem = document.createElement('div');
+                postItem.innerHTML = `
+                    <h2>${post.title}</h2>
+                    <p>${post.content}</p>
+                    ${post.imageUrl ? `<img src="${post.imageUrl}" alt="Post Image" style="width:100%; height:auto;">` : ''}
+                    <button onclick="editPost('${doc.id}', '${post.title}', '${post.content}')">Edit</button>
+                    <button onclick="deletePost('${doc.id}')">Delete</button>
+                    <hr>
+                `;
+                postList.appendChild(postItem);
             });
         }
     </script>
